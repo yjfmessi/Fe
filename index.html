@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Nosso Amor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(to right, #fff5f8, #ffeef3);
+      color: #802041;
+      text-align: center;
+      padding: 30px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      color: #b30047;
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    img.foto {
+      width: 250px;
+      border-radius: 20px;
+      margin: 20px 0;
+      box-shadow: 0 0 15px #cc3366;
+    }
+
+    #contador {
+      font-size: 22px;
+      background-color: #fff0f5;
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      font-weight: bold;
+      border: 2px dashed #ffb3c6;
+    }
+
+    .frase {
+      font-size: 28px;
+      margin: 20px 0;
+      color: #cc0066;
+    }
+
+    .pergunta {
+      font-size: 24px;
+      margin-top: 40px;
+      display: none;
+    }
+
+    .resposta {
+      display: block;
+      margin: 10px auto;
+      background-color: #fff0f5;
+      padding: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      width: 60%;
+      transition: 0.3s;
+      border: 2px solid #ffb3d9;
+    }
+
+    .resposta:hover {
+      background-color: #ffd9eb;
+    }
+
+    #feedback {
+      margin-top: 20px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    #final {
+      display: none;
+      font-size: 26px;
+      margin-top: 40px;
+      color: #b30047;
+    }
+
+    .rosas {
+      position: absolute;
+      width: 80px;
+      opacity: 0.3;
+    }
+
+    .rosa-top-left { top: 0; left: 0; }
+    .rosa-top-right { top: 0; right: 0; transform: scaleX(-1); }
+    .rosa-bottom-left { bottom: 0; left: 0; transform: scaleY(-1); }
+    .rosa-bottom-right { bottom: 0; right: 0; transform: scale(-1, -1); }
+
+    @keyframes flutuar {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-600px) rotate(360deg); opacity: 0; }
+    }
+
+    .flutuante {
+      position: fixed;
+      bottom: -50px;
+      pointer-events: none;
+      z-index: 999;
+      animation: flutuar 4s linear forwards;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/Rose_Flower_PNG_Transparent_Image.png" class="rosas rosa-top-left">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/Rose_Flower_PNG_Transparent_Image.png" class="rosas rosa-top-right">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/Rose_Flower_PNG_Transparent_Image.png" class="rosas rosa-bottom-left">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/Rose_Flower_PNG_Transparent_Image.png" class="rosas rosa-bottom-right">
+
+  <h1>Feliz Aniversário de Namoro!</h1>
+  <img src="IMG_20250414_195719157_MFNR.jpg" alt="Noizes" class="foto">
+  <div id="contador"></div>
+  <div class="frase">"Você é minha melhor escolha todos os dias, minha Ise."</div>
+
+  <div class="pergunta" id="q0">
+    Qual foi nosso primeiro rolê juntos?
+    <div class="resposta" onclick="verificarResposta(true)">Na volta da missa </div>
+    <div class="resposta" onclick="verificarResposta(false)">No racha</div>
+    <div class="resposta" onclick="verificarResposta(false)">No shopping vendo Velozes e Furiosos</div>
+  </div>
+
+  <div class="pergunta" id="q1">
+    Qual apelido fofo você me deu?
+    <div class="resposta" onclick="verificarResposta(true)">Nanâm</div>
+    <div class="resposta" onclick="verificarResposta(false)">Biscoitinho</div>
+    <div class="resposta" onclick="verificarResposta(false)">Dumbo</div>
+  </div>
+
+  <div class="pergunta" id="q2">
+    Onde a gente se beijou pela primeira vez?
+    <div class="resposta" onclick="verificarResposta(true)">Em frente ao portão enferrujado</div>
+    <div class="resposta" onclick="verificarResposta(false)">No ponto de ônibus</div>
+    <div class="resposta" onclick="verificarResposta(false)">Na frente de um portão meio velho</div>
+  </div>
+
+  <div id="feedback"></div>
+  <div id="final">TE AMO DEMAIS, AMOR! Você é meu motivo de sorrir todo dia.</div>
+
+  <script>
+    const inicio = new Date('2024-07-14T20:00:00');
+    let perguntaAtual = 0;
+
+    function atualizarContador() {
+      const agora = new Date();
+      const diferenca = agora - inicio;
+      const segundos = Math.floor(diferenca / 1000);
+      const minutos = Math.floor(segundos / 60);
+      const horas = Math.floor(minutos / 60);
+      const dias = Math.floor(horas / 24);
+      const meses = Math.floor(dias / 30.44);
+
+      const restanteDias = dias % 30.44;
+      const restanteHoras = horas % 24;
+      const restanteMinutos = minutos % 60;
+      const restanteSegundos = segundos % 60;
+
+      document.getElementById("contador").innerHTML =
+        `Estamos juntos há ${meses} meses, ${Math.floor(restanteDias)} dias, ${restanteHoras}h ${restanteMinutos}min ${restanteSegundos}s`;
+    }
+
+    setInterval(atualizarContador, 1000);
+    atualizarContador();
+
+    document.getElementById("q0").style.display = "block";
+
+    function verificarResposta(certa) {
+      const feedback = document.getElementById("feedback");
+      if (certa) {
+        feedback.innerHTML = "ACERTOU, ISEEEEE!!! KKKKKK";
+        feedback.style.color = "#28a745";
+        setTimeout(() => {
+          document.getElementById(`q${perguntaAtual}`).style.display = "none";
+          perguntaAtual++;
+          if (document.getElementById(`q${perguntaAtual}`)) {
+            document.getElementById(`q${perguntaAtual}`).style.display = "block";
+          } else {
+            document.getElementById("final").style.display = "block";
+            soltarPetalasECoracoes();
+          }
+        }, 1500);
+      } else {
+        feedback.innerHTML = "ERRÔÔÔÔU KKKKK tenta de novo, amor";
+        feedback.style.color = "#ff0000";
+      }
+    }
+
+    function soltarPetalasECoracoes() {
+      const simbolos = ["❤️", "🌹", "💗", "🥀"];
+      for (let i = 0; i < 30; i++) {
+        const item = document.createElement("div");
+        item.classList.add("flutuante");
+        item.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+        item.style.left = Math.random() * 100 + "vw";
+        item.style.animationDelay = (Math.random() * 2) + "s";
+        item.style.fontSize = (20 + Math.random() * 25) + "px";
+        document.body.appendChild(item);
+        setTimeout(() => item.remove(), 5000);
+      }
+    }
+  </script>
+</body>
+</html>
